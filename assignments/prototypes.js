@@ -65,10 +65,6 @@
 
   const mollie = new Person('Mollie', 29);
 
-
-
-  
-
   // TASK 2
 
   // - Build a Car constructor that takes model name and make.
@@ -78,6 +74,31 @@
   // - A crashed car can't be driven any more. Attempts return a string "I crashed at x miles!", x being the miles in the odometer.
   // - Give cars the ability to be repaired.
   // - A repaired car can be driven again.
+  function Car(model, name, make) {
+    this.model = model;
+    this.name = name;
+    this.make = make;
+    this.odometer = 0;
+    this.crashed = false;
+  }
+
+  Car.prototype.drive = function(distance) {
+    if (this.crashed) {
+      return `I crashed at ${this.odometer} miles!`;
+    }
+
+    this.odometer += distance;
+  }
+
+  Car.prototype.crash = function() {
+    this.crashed = true;
+  }
+
+  Car.prototype.repair = function() {
+    this.crashed = false;
+  }
+
+  const audi = new Car('rs4', 'Jessy' , 'Audi');
 
   // TASK 3
 
