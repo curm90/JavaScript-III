@@ -106,13 +106,90 @@
   // - Babies of course inherit the ability to greet, which can be strange.
   // - Babies should have the ability to play, which persons don't.
   // - By playing, a string is returned with some text of your choosing.
+  function Baby(name, age) {
+    Person.call(this, name, age);
+  }
+
+  Baby.prototype = Object.create(Person.prototype);
+
+  Baby.prototype.play = function() {
+    return `goo goo gaa gaa`;
+  }
+
+  const baby = new Baby('Jordan', 1);
 
   // TASK 4
 
   // Use your imagination and come up with constructors that allow to build objects
   // With amazing and original capabilities. Build 3 small ones, or a very
   // complicated one with lots of state. Surprise us!
+  function Dog(type, name) {
+    this.type = type;
+    this.name = name;
+    this.needsPoop = false;
+  }
 
+  Dog.prototype.speak = function() {
+    return `woof woof`;
+  }
+
+  Dog.prototype.bathroom = function() {
+    this.needsPoop = true;
+  }
+
+  Dog.prototype.walk = function() {
+    this.needsPoop = false;
+  }
+
+  const poodle = new Dog('Poodle', 'Pebbles');
+  const chiwowa = new Dog('Chiwowa', 'Dave');
+
+  // -----------------------------------------------------
+
+  function Superhero(realName, gender, superheroName, canFly) {
+    this.realName = realName;
+    this.superheroName = superheroName;
+    this.gender = gender;
+    this.canFly = canFly;
+  }
+
+  Superhero.prototype.greet = function() {
+    return `Hello Everybody... I am ${this.superheroName}`
+  }
+
+  const superMan = new Superhero('Clarke Kent', 'M', 'Superman', true);
+  const wonderWomen = new Superhero('Diana Prince', 'F', 'Wonder Women', false);
+
+  // -----------------------------------------------------
+
+  function Book(title, author, pages) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.completed = false;
+  }
+
+  Book.prototype.read = function(pages) {
+    this.pages -= pages;
+    if (this.pages < 0) this.pages = 0;
+    if (this.pages === 0) {
+      this.completed = true;
+    }
+  }
+
+  Book.prototype.pagesLeft = function() {
+    return this.pages;
+  }
+
+  Book.prototype.message = function() {
+    if (this.pages === 0) {
+      return `Woohoo i finshed reading ${this.title}`;
+    }
+    return `I still have ${this.pages} left.`
+  }
+  
+  const bookOne = new Book('Can\'t Hurt me', 'David Goggins', 368);
+  const bookTwo = new Book('1984', 'George Orwell', 425);
 
 
 /*
