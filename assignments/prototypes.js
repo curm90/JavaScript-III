@@ -74,9 +74,8 @@
   // - A crashed car can't be driven any more. Attempts return a string "I crashed at x miles!", x being the miles in the odometer.
   // - Give cars the ability to be repaired.
   // - A repaired car can be driven again.
-  function Car(model, name, make) {
+  function Car(model, make) {
     this.model = model;
-    this.name = name;
     this.make = make;
     this.odometer = 0;
     this.crashed = false;
@@ -210,6 +209,15 @@
   * dimensions (These represent the character's size in the video game)
   * destroy() // prototype method that returns: `${this.name} was removed from the game.`
 */
+  function GameObject(obj) {
+    this.createdAt = obj.createdAt;
+    this.name = obj.name;
+    this.dimensions = obj.dimensions;
+  }
+
+  GameObject.prototype.destroy = function() {
+    return `${this.name} was removed from the game`;
+  }
 
 /*
   === CharacterStats ===
@@ -217,6 +225,16 @@
   * takeDamage() // prototype method -> returns the string '<object name> took damage.'
   * should inherit destroy() from GameObject's prototype
 */
+  function CharacterStats(obj, healthPoints) {
+    GameObject.call(this, obj);
+    this.healthPoints = obj.healthPoints;
+  }
+
+  CharacterStats.prototype = Object.create(GameObject.prototype);
+
+  CharacterStats.prototype.takeDamage = function() {
+    return `${this.name} took damage`;
+  }
 
 /*
   === Humanoid (Having an appearance or character resembling that of a human.) ===
@@ -227,6 +245,18 @@
   * should inherit destroy() from GameObject through CharacterStats
   * should inherit takeDamage() from CharacterStats
 */
+  function Humanoid(obj) {
+    CharacterStats.call(this, obj);
+    this.team = obj.team;
+    this.weapons = obj.weapons;
+    this.language = obj.language;
+  }
+
+  Humanoid.prototype = Object.create(CharacterStats.prototype);
+
+  Humanoid.prototype.greet = function() {
+    return `${this.name} offers agreeting in ${this.language}`;
+  }
 
 /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
@@ -236,7 +266,7 @@
 
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
-/*
+
   const mage = new Humanoid({
     createdAt: new Date(),
     dimensions: {
@@ -294,4 +324,4 @@
   console.log(archer.greet()); // Lilith offers a greeting in Elvish.
   console.log(mage.takeDamage()); // Bruce took damage.
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
-*/
+
