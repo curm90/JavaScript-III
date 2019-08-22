@@ -225,7 +225,7 @@
   * takeDamage() // prototype method -> returns the string '<object name> took damage.'
   * should inherit destroy() from GameObject's prototype
 */
-  function CharacterStats(obj, healthPoints) {
+  function CharacterStats(obj) {
     GameObject.call(this, obj);
     this.healthPoints = obj.healthPoints;
   }
